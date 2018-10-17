@@ -1,5 +1,6 @@
 # 3010Blockchain
-Blockchain for Rental Properties
+Blockchain for Sellers and Markets
+by Yifan Li and Yang Yang
 
 The current code will contain similarties from, the similarities of which will lessen as we learn and advance our project :
 https://www.udemy.com/nodejs-express-mongodb-dev-to-deployment/
@@ -18,8 +19,8 @@ Git for windows ( Not necessary)
 Visual Studio Code ( Not necessary)
 
 Download source code
-In terminal: npm install package.json ( which contains the list of dependencies)
-In terminal: node app.js
+In unix terminal: npm install package.json ( which contains the list of dependencies)
+In unix terminal: node app.js
 To See Website: localhost:5000
 
 Dependencies:
