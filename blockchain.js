@@ -1,7 +1,5 @@
 const SHA256 = require('crypto-js/sha256')
 
-
-
 class Item { 
 /* Item to be sold
     Takes in productname, price, and websites to be sold at for now
@@ -14,22 +12,28 @@ class Item {
     }
 }
 class Block {
-    constructor(timestamp, item1) {
-        this.index = 0;
-        this.timestamp = timestamp;
-        this.item1 = item1; 
-        this.previousHash = "0";
-        this.hash = this.calculateHash();
-        this.nonce = 0;
-    }
+    // this constructor can take two parameters
+    // first is the item, second is the seller
+    constructor() {
+        var currentDate = new Date();
+        this.timestamp = currentDate.getTime();
+        this.item = arguments[0];
 
+        this.previousHash = "0"; 
+        this.seller = arguments[1]; 
+        this.hash = SHA256(this.timestamp + this.item + this.previousHash).toString();
+        //this.hash = this.calculateHash();
+       // this.nonce = 0;
+    }
+/*
     calculateHash() {
-        return SHA256(this.index + this.previousHash + this.timestamp + this.data + this.nonce).toString();
-    }
-
+        return SHA256(this.timestamp + this.item + this.previousHash).toString();
+    }*/
+/*
     mineBlock(difficulty) {
 
     }
+*/
 }
 
 class Blockchain{
@@ -37,17 +41,19 @@ class Blockchain{
         this.chain = [this.createGenesis()];
     }
 
+    // The genesis block is Empty for now, maybe create a different kind of genesis block in the future where it stores stuff
     createGenesis() {
-        return new Block(0, "01/01/2017", "Genesis block", "0")
+        return new Block(new Item(0,0,0) ,"Empty");
     }
 
     latestBlock() {
-        return this.chain[this.chain.length - 1]
+        return this.chain[this.chain.length - 1];
     }
 
     addBlock(newBlock){
         newBlock.previousHash = this.latestBlock().hash;
-        newBlock.hash = newBlock.calculateHash();
+        newBlock.hash = SHA256(this.timestamp + this.item + this.previousHash).toString();
+        //newBlock.hash = newBlock.calculateHash();
         this.chain.push(newBlock);
     }
 
@@ -68,10 +74,24 @@ class Blockchain{
         return true;
     }
 }
+let MarketChain = new Blockchain();
+MarketChain.addBlock(new Block(new Item("hi","hello","yo"), "Dragon"));
 
+exports.getBlockChain = function() {
+    return MarketChain;
+}
+exports.newBlock = function() {
+    return Block;
+}
+exports.newItem = function() {
+    return Item;
+}
+//let MarketChain = new Blockchain();
+// The below is a test
+/*
 let jsChain = new Blockchain();
-jsChain.addBlock(new Block("12/25/2017", {amount: 5}));
-jsChain.addBlock(new Block("12/26/2017", {amount: 10}));
+jsChain.addBlock(new Block(new Item(1,1,1), "Frank"));
+jsChain.addBlock(new Block(new Item("hi","hello","yo"), "Dragon"));
 
 console.log(JSON.stringify(jsChain, null, 4));
-console.log("Is blockchain valid? " + jsChain.checkValid());
+console.log("Is blockchain valid? " + jsChain.checkValid()); */

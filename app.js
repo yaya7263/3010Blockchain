@@ -13,11 +13,11 @@ mongoose.connect('mongodb://localhost/firstblockchain-dev', {useMongoClient: tru
 .catch(err => console.log(err));
 
 // Load Model
-require('./models/Idea');
-const Idea = mongoose.model('ideas');
+require('./models/block');
+const Idea = mongoose.model('blocks');
 
 //imports blockchain
-require('./blockchain');
+//require('./blockchain.js');
 
 // Handlebars middleware
 app.engine('handlebars', exphbs({
@@ -43,7 +43,7 @@ app.get('/about', (req, res) => {
 // Ideas Index Route
 app.get('/ideas', (req, res) => {
     Idea.find({})
-        then(ideas => {
+        .then(ideas => {
             res.render('ideas/index', {
                 ideas:ideas
             })
@@ -55,34 +55,42 @@ app.get('/ideas/add', (req, res) => {
     res.render('ideas/add');
 })
 
+let blockchain = require('./blockchain.js');
+let CurrentChain = blockchain.getBlockChain();
+CurrentChain.addBlock(new blockchain.newBlock(new blockchain.newItem(1,1,1), "Frank"));
+//CurrentChain.addBlock(new Block(new Item("hi","hello","yo"), "Dragon"));
 app.post('/ideas', (req,res) =>{
-    let emptys = [];
-    if(!req.body.seller){
-        emptys.push({text:'empty first text box'});
+    // takes the data inputed and adds a new block
+    CurrentChain.addBlock(new blockchain.newBlock(new blockchain.newItem(req.body.productName,req.body.productPrice,req.body.website), req.body.seller));
+    console.log(JSON.stringify(CurrentChain,null,4));
+    const newUser ={
+        seller: req.body.seller,
+        itemProductWebsite: req.body.website,
+        itemProductPrice: req.body.productPrice,
+        itemProductName: req.body.productName,
+        useNewUrlParser: true
     }
-    if(!req.body.address){
-        emptys.push({text:'empty second text box'});
-    }
-    
-    if(emptys.length > 0){
-        res.render('ideas/add', {
-            emptys: emptys, 
-            seller:  req.body.seller,
-            address: req.body.address
-        });
-    } else {
-        const newUser ={
-            seller: req.body.seller,
-            address: req.body.address,
-            useNewUrlParser: true
-        }
-        new Idea(newUser)
+    new Idea(newUser)
         .save()
         .then(idea => {
-            res.redirect('/ideas');
-        })
-    }
+        res.redirect('/');
+    })
 });
+    /*
+    const newUser ={
+        seller: req.body.seller,
+        address: req.body.address,
+        useNewUrlParser: true
+    }
+    new Idea(newUser)
+        .save()
+        .then(idea => {
+        res.redirect('/ideas');
+    })
+    */
+
+
+
 
 const port = 5000; 
 
