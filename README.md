@@ -9,5 +9,3 @@ and
 
 https://medium.com/@spenserhuang/learn-build-a-javascript-blockchain-part-1-ca61c285821e
 
-The screenshot of seller site:
-https://imgur.com/a/d4gn5t8
