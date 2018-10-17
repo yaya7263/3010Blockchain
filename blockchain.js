@@ -1,10 +1,23 @@
 const SHA256 = require('crypto-js/sha256')
 
+
+
+class Item { 
+/* Item to be sold
+    Takes in productname, price, and websites to be sold at for now
+    Currently, singular website, so to be changed in the future
+*/
+    constructor(productName, price, website) {
+        this.productName = productName;
+        this.price = price;
+        this.website = website; 
+    }
+}
 class Block {
-    constructor(timestamp, data) {
+    constructor(timestamp, item1) {
         this.index = 0;
         this.timestamp = timestamp;
-        this.data = data;
+        this.item1 = item1; 
         this.previousHash = "0";
         this.hash = this.calculateHash();
         this.nonce = 0;

@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 // Create Schema 
 
 const IdeaSchema = new Schema({
-    title:{
+    seller:{
         type: String, 
         required: true
     },
-    details: {
+    address: {
         type: String,
         required: true
     },

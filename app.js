@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 
 //Index Route
 app.get('/',(req, res) => {
-    const title = 'Welcome1';
+    const title = 'Hello Seller!';
     res.render('index', {title: title}); 
 })
 
@@ -40,6 +40,16 @@ app.get('/about', (req, res) => {
     res.render('about');
 })
 
+// Ideas Index Route
+app.get('/ideas', (req, res) => {
+    Idea.find({})
+        then(ideas => {
+            res.render('ideas/index', {
+                ideas:ideas
+            })
+        })
+    res.render('ideas/index'); 
+});
 // Idea Form Add Route
 app.get('/ideas/add', (req, res) => {
     res.render('ideas/add');
@@ -63,13 +73,14 @@ app.post('/ideas', (req,res) =>{
     } else {
         const newUser ={
             seller: req.body.seller,
-            address: req.body.details
+            address: req.body.address,
+            useNewUrlParser: true
         }
         new Idea(newUser)
-            .save()
-            .then(idea => {
-                res.redirect('/ideas');
-            })
+        .save()
+        .then(idea => {
+            res.redirect('/ideas');
+        })
     }
 });
 
