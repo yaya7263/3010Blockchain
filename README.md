@@ -9,7 +9,7 @@ and
 https://medium.com/@spenserhuang/learn-build-a-javascript-blockchain-part-1-ca61c285821e
 
 
-How to run:
+How to run backend + website:
 The following should be downloaded and installed ( I am using windows 10)
 
 Nodejs
@@ -29,5 +29,10 @@ Dependencies:
     "express-handlebars": "^3.0.0",
     "mongoose": "^5.3.4",
     "package.json": "^2.0.1"
+	
+How to run frontend AngularJS:
+open index.html
+
+
 	
 
