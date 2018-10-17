@@ -86,6 +86,12 @@ exports.newBlock = function() {
 exports.newItem = function() {
     return Item;
 }
+let jsChain = new Blockchain();
+jsChain.addBlock(new Block(new Item(1,1,1), "Frank"));
+jsChain.addBlock(new Block(new Item("hi","hello","yo"), "Dragon"));
+
+console.log(JSON.stringify(jsChain, null, 4));
+
 //let MarketChain = new Blockchain();
 // The below is a test
 /*
